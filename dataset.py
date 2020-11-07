@@ -12,9 +12,11 @@ import torch.nn
 
 class MyDataset(data.Dataset):
     def __init__(self, transform=None):
-        self.input_images = np.load('/home/amax/data/yqw/segmentation/dataset/data.npy')
+        #self.input_images = np.load('/home/amax/data/yqw/segmentation/dataset/data.npy')
+        self.input_images = np.load('/home/yqw/neuron/outfile.npy')
         #self.input_images = self.input_images[0:66,:,:]
-        self.mask =np.load('/home/amax/data/yqw/segmentation/dataset/masks.npy')
+        #self.mask = np.load('/home/amax/data/yqw/segmentation/dataset/masks.npy')
+        self.mask =np.load('/home/amax/data/yqw/neuron/labels.npy')
         #self.mask = self.mask[0:66, :, :]
         self.mask=self.mask.astype(int)
         #self.labels =np.load('/home/amax/data/yqw/segmentation/dataset/labels.npy')

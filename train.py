@@ -25,7 +25,7 @@ loss_names.append('BCEWithLogitsLoss')
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_size', default=2600, type=int,
+    parser.add_argument('--train_size', default=23000, type=int,
                         help='number of train set')
     parser.add_argument('--num_class', default=2, type=int,
                         help='class_number')
@@ -34,7 +34,7 @@ def parse_args():
                         help='loss: ' +
                             ' | '.join(loss_names) +
                             ' (default: BCEDiceLoss)')
-    parser.add_argument('--epochs', default=50, type=int, metavar='N',
+    parser.add_argument('--epochs', default=20, type=int, metavar='N',
                         help='number of total epochs to run')
     parser.add_argument('--early-stop', default=20, type=int,
                         metavar='N', help='early stopping (default: 20)')
@@ -174,9 +174,10 @@ def main():
     # connect to cuda
     use_gpu = torch.cuda.is_available()
     print(use_gpu)
+    use_gpu=False
     num_gpu = list(range(torch.cuda.device_count()))
     print(num_gpu)
-    torch.cuda.set_device(1)
+    #torch.cuda.set_device(1)
 
     # Data loading code
     whole_set = MyDataset()
@@ -189,7 +190,7 @@ def main():
 
     # create model
     model = unet_2d()
-    model = model.cuda()
+    #model = model.cuda()
 
     if args.optimizer == 'Adam':
         optimizer = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=args.lr)
@@ -230,7 +231,7 @@ def main():
         ], index=['epoch', 'lr', 'loss', 'iou', 'dice_coef', 'pixel_acc', 'val_loss', 'val_iou','val_dice_coef', 'val_pixel_acc'])
 
         log = log.append(tmp, ignore_index=True)
-        prefix='/home/yqw/seg/check2/'
+        prefix='/home/yqw/neuron/check/'
         name=time.strftime(prefix+ '%m%d_%H')
         log.to_csv(name, index=False)
 

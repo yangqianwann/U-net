@@ -34,14 +34,14 @@ def dice_coefs(pred, target, num_class):
     return np.mean(dice_coefs)
 
 def save_result_comparison(epoch, input_np, input_mask, output_np):
-    original_im = np.zeros((512,512))
+    original_im = np.zeros((256,256))
     original_im[:,:]=input_np[0,0,:,:]
-    im_seg = np.zeros((512, 512))
-    im_mask = np.zeros((512, 512))
+    im_seg = np.zeros((256, 256))
+    im_mask = np.zeros((256, 256))
 
     # the following version is designed for 11-class version and could still work if the number of classes is fewer.
-    for i in range(512):
-        for j in range(512):
+    for i in range(256):
+        for j in range(256):
             if output_np[i, j] == 0:
                 im_seg[i, j] = 255
             elif output_np[i, j] == 1:
@@ -54,6 +54,6 @@ def save_result_comparison(epoch, input_np, input_mask, output_np):
     # horizontally stack original image and its corresponding segmentation results
     hstack_image = np.hstack((original_im, im_seg, im_mask))
     new_im = Image.fromarray(np.uint8(hstack_image))
-    file_name = '/home/yqw/seg/20201030/0.95,0.99/output/' + str(epoch) + '.jpg'
+    file_name = '/home/yqw/neuron/check/' + str(epoch) + '.jpg'
     new_im.save(file_name)
     print('successfully save result')

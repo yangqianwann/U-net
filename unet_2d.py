@@ -111,12 +111,12 @@ class unet_2d(nn.Module):
 
         # Up sampling
         trans_1 = self.trans_1(bridge) 
-        #print(trans_1.shape,down_5.shape)
+        #print('trans_1',trans_1.shape,down_5.shape)
         concat_1 = torch.cat([trans_1, down_5], dim=1) 
         up_1 = self.up_1(concat_1)
         
         trans_2 = self.trans_2(up_1) 
-        #print(trans_2.shape,down_4.shape)
+        #print('trans_2',trans_2.shape,down_4.shape)
         concat_2 = torch.cat([trans_2, down_4], dim=1) 
         up_2 = self.up_2(concat_2) 
         
